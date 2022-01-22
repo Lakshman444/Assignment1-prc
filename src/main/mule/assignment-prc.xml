@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="94b5dc57-1e9b-4843-af4d-1c582171d2c6" >
+		<http:request-connection host="localhost" port="8081" />
+	</http:request-config>
+	<flow name="assignment-prcFlow" doc:id="65f1f606-fdc2-4637-9f46-e1d245f84899" >
+		<http:request method="GET" doc:name="Request" doc:id="069d041e-8350-460e-bf5d-e710c70c6c8b" config-ref="HTTP_Request_configuration" path="/api/details" responseTimeout="18000000">
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"userId1" : attributes.queryParams.userId1,
+	"userId2" : attributes.queryParams.userId2,
+	"userId3" : attributes.queryParams.userId3
+}]]]></http:query-params>
+		</http:request>
+	</flow>
+</mule>
